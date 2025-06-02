@@ -20,12 +20,7 @@ on:
        required: false
        default: false
        type: boolean
-      enable_feature_z:
-       description: "是否添加风驰驱动"
-       required: false
-       default: false
-       type: boolean
-       
+
 
 
 jobs:
@@ -261,14 +256,7 @@ jobs:
          sed -i 's/${scm_version}//' ./common/scripts/setlocalversion
          sudo sed -i 's/-4k/${{ github.event.inputs.KERNEL_SUFFIX }}/g' ./common/arch/arm64/configs/gki_defconfig
 
-      - name: Add sched_ext
-        if: ${{inputs.enable_feature_z }}
-        run: |
-         cd kernel_workspace/kernel_platform/
-         git clone https://github.com/HanKuCha/sched_ext.git
-         cp -r ./sched_ext/* ./common/kernel/sched
-         rm -rf ./sched_ext/.git
-         cd common/kernel/sched
+
 
       - name: Build Kernel
         run: |
